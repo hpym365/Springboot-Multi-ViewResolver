@@ -40,7 +40,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         types.put("xml", MediaType.TEXT_XML);
         types.put("html", MediaType.APPLICATION_XHTML_XML);
         configurer.ignoreAcceptHeader(true).defaultContentType(
-                MediaType.IMAGE_JPEG).mediaTypes(types);
+                MediaType.TEXT_HTML).mediaTypes(types);
     }
 
 

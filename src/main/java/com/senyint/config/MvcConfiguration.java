@@ -36,11 +36,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 	 */
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        Map<String,MediaType> types = new HashMap<String,MediaType>();
-        types.put("xml",MediaType.TEXT_XML);
-        types.put("html",MediaType.APPLICATION_XHTML_XML);
+        Map<String, MediaType> types = new HashMap<String, MediaType>();
+        types.put("xml", MediaType.TEXT_XML);
+        types.put("html", MediaType.APPLICATION_XHTML_XML);
         configurer.ignoreAcceptHeader(true).defaultContentType(
-                MediaType.TEXT_HTML).mediaTypes(types);
+                MediaType.IMAGE_JPEG).mediaTypes(types);
     }
 
 
@@ -51,29 +51,17 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
         List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
 
-        resolvers.add(jaxb2MarshallingXmlViewResolver());
         resolvers.add(jsonViewResolver());
-
         resolvers.add(jspViewResolver());
         resolvers.add(thymeleafViewResolver());
         resolvers.add(thymeleafViewResolverhtml());
-
         resolver.setViewResolvers(resolvers);
         return resolver;
     }
 
-
-    @Bean
-    public ViewResolver jaxb2MarshallingXmlViewResolver() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setClassesToBeBound(Pizza.class);
-        return new Jaxb2MarshallingXmlViewResolver(marshaller);
-    }
-
-
     @Bean
     public ViewResolver jsonViewResolver() {
-        return new ViewResolver(){
+        return new ViewResolver() {
 
             @Override
             public View resolveViewName(String viewName, Locale locale) throws Exception {
@@ -90,7 +78,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setSuffix(".jsp");
-        viewResolver.setOrder(1);
+        viewResolver.setContentType("text/html");
+        viewResolver.setOrder(2);
         return viewResolver;
     }
 
@@ -105,7 +94,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
-        resolver.setOrder(2);
+        resolver.setOrder(1);
         resolver.setContentType("text/xml");
         return resolver;
     }
@@ -115,7 +104,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
-        resolver.setOrder(3);
+        resolver.setOrder(0);
         resolver.setContentType("application/xhtml+xml");
         return resolver;
     }
@@ -133,9 +122,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
         resolver.setSuffix(".xml");
-//        resolver.setTemplateMode(TemplateMode.XML);
+        resolver.setTemplateMode(TemplateMode.XML);
         return resolver;
     }
-
-
 }

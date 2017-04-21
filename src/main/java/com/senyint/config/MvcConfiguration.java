@@ -37,7 +37,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         Map<String,MediaType> types = new HashMap<String,MediaType>();
-        types.put("tlf",MediaType.TEXT_XML);
+        types.put("xml",MediaType.TEXT_XML);
+        types.put("html",MediaType.APPLICATION_XHTML_XML);
         configurer.ignoreAcceptHeader(true).defaultContentType(
                 MediaType.TEXT_HTML).mediaTypes(types);
     }
@@ -55,6 +56,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
         resolvers.add(jspViewResolver());
         resolvers.add(thymeleafViewResolver());
+        resolvers.add(thymeleafViewResolverhtml());
 
         resolver.setViewResolvers(resolvers);
         return resolver;
@@ -109,6 +111,16 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public ViewResolver thymeleafViewResolverhtml() {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setOrder(3);
+        resolver.setContentType("application/xhtml+xml");
+        return resolver;
+    }
+
+    @Bean
     public TemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
@@ -121,7 +133,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
         resolver.setSuffix(".xml");
-        resolver.setTemplateMode(TemplateMode.XML);
+//        resolver.setTemplateMode(TemplateMode.XML);
         return resolver;
     }
 

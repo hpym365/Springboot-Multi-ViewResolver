@@ -4,7 +4,7 @@
 <html lang="en">
 
 <body>
-<p>test.jsp22222222</p>
+<p>WEB-INF/jsp/test.jsp</p>
 </body>
 
 </html>

@@ -12,15 +12,8 @@ import java.util.Map;
 public class TestController {
 
     @RequestMapping(value = "/test")
-    public String Test(){
-        System.out.println("hahaha");
+    public String Test(Map<String, Object> map){
+        map.put("json","test");
         return "test";
-    }
-
-    @RequestMapping("/test1")
-    public String Test1(Map<String, Object> map){
-        System.out.println("test1");
-        map.put("test","test");
-        return "test2";
     }
 }

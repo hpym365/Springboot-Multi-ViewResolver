@@ -22,7 +22,7 @@ visit http://localhost:8888/test.json   resolve by  MappingJackson2JsonView cont
 6、患者被叫过之后数据应落地 加入到mq消息队列(mq问题时容错?) 
 做持久化或数据库已被查询等？
 mq解耦 系统在拆分？ 业务处理？  查询处理系统？
-7、
+7、缓存穿透  缓存失效? 系统启动加载缓存 虽然系统小也考虑进去
 7、管理者领导查看院区队列情况？不同权限查看不同级别 医院-院区-科室-...
 
 springboot + vue? or thymeleaf? + druid + mysql?+oracle + 

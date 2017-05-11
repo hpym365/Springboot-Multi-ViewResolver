@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -38,9 +37,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         Map<String, MediaType> types = new HashMap<String, MediaType>();
         types.put("xml", MediaType.TEXT_XML);
-        types.put("html", MediaType.APPLICATION_XHTML_XML);
+        types.put("zzz", MediaType.APPLICATION_XHTML_XML);
         configurer.ignoreAcceptHeader(true).defaultContentType(
-                MediaType.TEXT_HTML).mediaTypes(types);
+                MediaType.APPLICATION_XHTML_XML).mediaTypes(types);
     }
 
 
@@ -94,8 +93,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
-        resolver.setOrder(1);
         resolver.setContentType("text/xml");
+        resolver.setOrder(1);
         return resolver;
     }
 
@@ -121,8 +120,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
-        resolver.setSuffix(".xml");
-        resolver.setTemplateMode(TemplateMode.XML);
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.XHTML);
         return resolver;
     }
 }
